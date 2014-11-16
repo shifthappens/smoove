@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="org.smoove.smoove" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Smoove</name>
+    <description>
+        A demo app to control doors, TVs, lamps, etc. via Beacons
+    </description>
+    <author email="coen@shifthappens.nl" href="http://shifthappens.nl">
+        shifthappens
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>
