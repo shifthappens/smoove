@@ -99,6 +99,7 @@ h1 {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     z-index: -1;
     width: 100px;
@@ -125,8 +126,9 @@ background-color: #FFF;
     z-index: 200;
 }
 
-#connectivity-status.disconnected { color: red; }
+#connectivity-status { color: red; }
 #connectivity-status.connected { color: green; }
+.beacon { display: none; }
 .action { font-weight: bolder; font-size: 16px; }
 
 #footer { 

@@ -35,14 +35,18 @@
                 <h1>Smoove</h1>
             </header>
             <div id="content">
-                <div id="connectivity">Verbinding met beacon: <br /><span id="connectivity-status" class="disconnected">Niet verbonden</span></div>
+                <div id="connectivity">Verbinding met beacon: <br /><span id="connectivity-status">Niet verbonden</span></div>
                 <div id="waiting-for-connection">
                     <div class="blip"></div>
                     <img src="img/beacon_blue.png" />
                 </div>
-                <div class="beacon beacon-template">
-                    <div id="actionbox">
+                <div class="beacon beacon-template" id="beacon-10">
+                    <div class="actionbox">
                         <button onClick="openDoor()" class="action btn btn-lg btn-info" id="action-for-beacon-10">Open Deur</button>
+                    </div>
+                </div>
+                <div class="beacon" id="beacon-20">
+                    <div class="actionbox">
                         <button onClick="switchLight()" class="action btn btn-lg btn-info" id="action-for-beacon-20">Licht Aan</button>
                     </div>
                 </div>

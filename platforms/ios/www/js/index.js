@@ -33,8 +33,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        //alert('opgestart');
-        //app.receivedEvent('deviceready');
+        console.log('device is ready')
         startBeaconRanger();
 
     },
@@ -63,6 +62,8 @@ var max_timeouts = 5; //the threshold at which the connection to the beacon is c
 //this is also more battery intensive, but right now the only way to detect the beacons succesfully
 function startBeaconRanger()
 {
+    console.log('beacon ranger started...');
+
     var logToDom = function (message) {
         var e = document.createElement('label');
         e.innerText = message;
@@ -116,9 +117,10 @@ function startBeaconRanger()
 //UI refreshings and a function call to get actions (theoretically)
 function reconnectBeacon(pluginResult)
 {
-    document.getElementById('connectivity-status').className = 'connected';
-    document.getElementById('connectivity-status').innerHTML = 'verbonden';
-    document.getElementById('waiting-for-connection').style.display = 'none';
+    $('.blip').hide();
+    $('#connectivity-status').addClass('connected').text('verbonden met ' + pluginResult.beacons.length + ' beacon(s)');
+    $('.beacon').hide();    
+
     beacon_timeouts = 0;
 
     getActionsForBeacon(pluginResult);
@@ -126,11 +128,9 @@ function reconnectBeacon(pluginResult)
 
 function disconnectBeacon()
 {
-    document.getElementById('connectivity-status').className = 'disconnected';
-    document.getElementById('connectivity-status').innerHTML = 'niet verbonden';
-    document.getElementById('waiting-for-connection').style.display = 'inline';
-
-    $('#app #actionbox button').hide();    
+    $('.blip').show();
+    $('#connectivity-status').removeClass('connected').text('niet verbonden');
+    $('.beacon').hide();    
 }
 
 function getActionsForBeacon(pluginResult)
@@ -141,20 +141,20 @@ function getActionsForBeacon(pluginResult)
     var label = "Onbekende knop ("+beacon.minor+")";
     var eventHandler = 'noAction';
 
-    $('#app #actionbox button').hide();
+    $('.beacon').hide();
 
     jQuery.each(pluginResult.beacons, function(index, beacon)
     {
-        $('#actionbox #noaction').hide();
+        $('#noaction').hide();
         
         switch(beacon.minor)
         {
             case 10:
-            $('#actionbox #action-for-beacon-10').show();
+            $('#beacon-10').show();
             break;
 
             case 20:
-            $('#actionbox #action-for-beacon-20').show();
+            $('#beacon-20').show();
             break;
 
             /* comment this out to just visually discard beacons that you don't use */
