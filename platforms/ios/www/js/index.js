@@ -44,6 +44,10 @@ var app = {
     }
 }
 
+//beacon literal object that gets fed to the Ranger and Monitor functions
+//uuid and identifier are mandatory, major and minor are optional
+//I'm not sure what identifier exactly means. You can't set it in the beacon itself
+//and is not really documented in Apple's specifications...
 var beacon = {
     uuid: 'b9407f30-f5f8-466e-aff9-25556b57fe6d',
     identifier: 'smoovebeacon',
@@ -51,9 +55,12 @@ var beacon = {
     major: 1
 };
 
-var beacon_timeouts = 0;
-var max_timeouts = 5;
+var beacon_timeouts = 0; //counter for how many timeouts (non-finds) have been registered
+var max_timeouts = 5; //the threshold at which the connection to the beacon is considered lost
 
+//The ranger is a procedure where the beacons are constantly probed to determine their signal strength
+//this allows for knowing roughly how far away the beacon is (in three steps)
+//this is also more battery intensive, but right now the only way to detect the beacons succesfully
 function startBeaconRanger()
 {
     var logToDom = function (message) {
@@ -106,6 +113,7 @@ function startBeaconRanger()
         
 }
 
+//UI refreshings and a function call to get actions (theoretically)
 function reconnectBeacon(pluginResult)
 {
     document.getElementById('connectivity-status').className = 'connected';
@@ -142,19 +150,15 @@ function getActionsForBeacon(pluginResult)
         switch(beacon.minor)
         {
             case 10:
-            label = 'Open Deur';
-            eventHandler = 'openDoor';
             $('#actionbox #action-for-beacon-10').show();
             break;
 
             case 20:
-            label = "Zet Lamp Aan";
-            eventHandler = 'switchLight'
             $('#actionbox #action-for-beacon-20').show();
             break;
 
+            /* comment this out to just visually discard beacons that you don't use */
             default:
-            eventHandler = 'noAction';
             $('#actionbox #noaction').text('Geen acties bekend voor beacon ('+beacon.minor+')');
             //$('#actionbox #noaction').show();
             break;
@@ -178,12 +182,10 @@ function switchLight(event)
     console.log(response);
 }
 
-function noAction(event)
-{
-    //niets
-}
-
-
+//This function activates the beacon monitor, a far less battery intensive way of detecting the beacons
+//all this is supposed to do is notify when in range of a beacon and when out of range
+//so no information about proximity is known. However, in the current implementation (nov 2014) this doesn't work
+//too well. It starts the observer but doesn't seem to report any recognized beacons.
 function startBeaconMonitor()
 {
 
@@ -255,6 +257,7 @@ function SmooveBeaconProcessor(pluginResult)
     console.log(pluginResult);
 }
 
+//non-jQuery implementation of a simple xmlhttp get request
 function httpGet(theUrl)
 {
     var xmlHttp = null;
