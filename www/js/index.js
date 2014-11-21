@@ -157,6 +157,14 @@ function getActionsForBeacon(pluginResult)
             $('#beacon-20').show();
             break;
 
+            case 30:
+            $('#beacon-30').show();
+            break;
+
+            case 40:
+            $('#beacon-40').show();
+            break;
+            
             /* comment this out to just visually discard beacons that you don't use */
             default:
             $('#actionbox #noaction').text('Geen acties bekend voor beacon ('+beacon.minor+')');
